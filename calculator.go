@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// римское число в целое
 func rimskint(roman string) int {
 	convertrimsk := map[string]int{
 		"I":      1,
@@ -61,6 +62,7 @@ func rimskint(roman string) int {
 	return convertrimsk[roman]
 }
 
+// целое число в римское
 func rimskstr(num int) string {
 	convertarabsk := map[int]string{
 		1:   "I",
@@ -122,10 +124,9 @@ func main() {
 
 	parts := strings.Split(expression, " ")
 	if len(parts) != 3 {
-		fmt.Println("Неверный ввод")
-		return
+		panic("Неверный ввод")
 	}
-
+	//Проверка,введеное число римское или нет
 	isRoman := false
 	_, err := strconv.Atoi(parts[0])
 	if err != nil {
@@ -134,10 +135,9 @@ func main() {
 
 	_, err = strconv.Atoi(parts[2])
 	if err != nil && !isRoman {
-		fmt.Println("Неверный ввод")
-		return
+		panic("Неверный ввод")
 	}
-
+	//числа в -> целые числа
 	var num1, num2 int
 	if isRoman {
 		num1 = rimskint(parts[0])
@@ -145,16 +145,14 @@ func main() {
 	} else {
 		num1, err = strconv.Atoi(parts[0])
 		if err != nil {
-			fmt.Println("Неверное число")
-			return
+			panic("Неверное число")
 		}
 		num2, err = strconv.Atoi(parts[2])
 		if err != nil {
-			fmt.Println("Неверное число")
-			return
+			panic("Неверное число")
 		}
 	}
-
+	//диапазон от 1 до 10ти
 	if num1 < 1 || num1 > 10 || num2 < 1 || num2 > 10 {
 		fmt.Println("Введите числа от 1 до 10")
 		return
@@ -172,15 +170,13 @@ func main() {
 		// Целочисленное деление
 		result = num1 / num2
 	default:
-		fmt.Println("Неподдерживаемая операция")
-		return
+		panic("Неподдерживаемая операция")
 	}
-
+	//Вывод если римские числа то римские, если нет вывод(арабские)
 	if isRoman {
 		// Проверка на <= 0
 		if result <= 0 {
-			fmt.Println("Ответ должен быть больше нуля")
-			return
+			panic("Ответ должен быть больше нуля")
 		}
 		fmt.Println(rimskstr(result))
 	} else {
